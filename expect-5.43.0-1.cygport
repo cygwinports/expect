@@ -1,0 +1,16 @@
+inherit tcl
+
+DESCRIPTION="Tool for automating interactive applications"
+HOMEPAGE="http://expect.nist.gov/"
+SRC_URI="http://expect.nist.gov/src/${P}.tar.gz"
+SRC_DIR="${PN}-${PV_MAJ_MIN}"
+
+NO_AUTOCONF=1
+CYGCONF_ARGS="
+	--with-tclinclude=${TCL_INCLUDEDIR}
+	--with-tcl=${TCL_LIBDIR}
+	--with-tkinclude=${TK_INCLUDEDIR}
+	--with-tk=${TK_LIBDIR}
+"
+USE_DESTDIR=0
+MAKEOPTS+=" -j1 SCRIPTS=  SCRIPTS_MANPAGES= "
