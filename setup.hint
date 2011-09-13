@@ -1,5 +1,5 @@
 category: Tcl
-requires: libX11_6 tcl tk
+requires: tcl
 sdesc: "Tool for automating interactive applications"
 ldesc: "Expect is a tool for automating interactive applications such as 
 telnet, ftp, passwd, fsck, rlogin, tip, etc. Expect really makes this 

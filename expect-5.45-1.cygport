@@ -1,0 +1,27 @@
+inherit tcl
+
+DESCRIPTION="Tool for automating interactive applications"
+HOMEPAGE="http://expect.nist.gov/"
+SRC_URI="mirror://sourceforge/expect/${PN}${PV}.tar.gz"
+SRC_DIR=${PN}${PV}
+
+DISTCLEANFILES="aclocal.m4 testsuite/aclocal.m4"
+
+src_compile() {
+	cd ${S}
+	cygautoreconf
+	cd ${B}
+	cygconf
+	cygmake SHLIB_LD='$(CC) -shared -Wl,--out-implib,$@.a'
+}
+
+src_install() {
+	cd ${B}
+	cyginstall SCRIPTS= SCRIPTS_MANPAGES=
+	dolib *.a
+
+	pushd ${D}/usr/lib/expect${PV}
+	mv *.dll ${D}/usr/bin/
+	sed -i -e 's|\(\$dir\)|\1 .. .. bin|' pkgIndex.tcl
+	popd
+}
