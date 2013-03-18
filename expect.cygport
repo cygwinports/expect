@@ -2,7 +2,7 @@ inherit tcl
 
 NAME="expect"
 VERSION=5.45
-RELEASE=1
+RELEASE=2
 CATEGORY="Tcl"
 SUMMARY="Tool for automating interactive applications"
 DESCRIPTION="Expect is a tool for automating interactive applications such as
@@ -12,6 +12,7 @@ adding Tk, you can also wrap interactive applications in X11 GUIs."
 HOMEPAGE="http://expect.nist.gov/"
 SRC_URI="mirror://sourceforge/expect/${PN}${PV}.tar.gz"
 SRC_DIR=${PN}${PV}
+PATCH_URI="5.45-openpty.patch"
 
 DISTCLEANFILES="aclocal.m4 testsuite/aclocal.m4"
 DIFF_EXCLUDES="config.guess config.sub"
