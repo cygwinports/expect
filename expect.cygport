@@ -2,7 +2,7 @@ inherit tcl
 
 NAME="expect"
 VERSION=5.45
-RELEASE=2
+RELEASE=3
 CATEGORY="Tcl"
 SUMMARY="Tool for automating interactive applications"
 DESCRIPTION="Expect is a tool for automating interactive applications such as
@@ -10,17 +10,30 @@ telnet, ftp, passwd, fsck, rlogin, tip, etc. Expect really makes this stuff
 trivial. Expect is also useful for testing these same applications. And by
 adding Tk, you can also wrap interactive applications in X11 GUIs."
 HOMEPAGE="http://expect.nist.gov/"
-SRC_URI="mirror://sourceforge/expect/${PN}${PV}.tar.gz"
-SRC_DIR=${PN}${PV}
-PATCH_URI="5.45-openpty.patch"
+SRC_URI="mirror://sourceforge/expect/expect${VERSION}.tar.gz"
+SRC_DIR="expect${VERSION}"
+PATCH_URI="
+	http://pkgs.fedoraproject.org/cgit/rpms/expect.git/plain/expect-5.43.0-log_file.patch
+	http://pkgs.fedoraproject.org/cgit/rpms/expect.git/plain/expect-5.45-man-page.patch
+	http://pkgs.fedoraproject.org/cgit/rpms/expect.git/plain/expect-5.45-match-gt-numchars-segfault.patch
+	http://pkgs.fedoraproject.org/cgit/rpms/expect.git/plain/expect-5.45-re-memleak.patch
+	http://pkgs.fedoraproject.org/cgit/rpms/expect.git/plain/expect-5.45-exp-log-buf-overflow.patch
+	http://pkgs.fedoraproject.org/cgit/rpms/expect.git/plain/expect-5.45-segfault-with-stubs.patch
+	http://pkgs.fedoraproject.org/cgit/rpms/expect.git/plain/expect-5.45-fd-leak.patch
+	http://pkgs.fedoraproject.org/cgit/rpms/expect.git/plain/expect-5.32.2-random.patch
+	http://pkgs.fedoraproject.org/cgit/rpms/expect.git/plain/expect-5.45-mkpasswd-dash.patch
+	http://pkgs.fedoraproject.org/cgit/rpms/expect.git/plain/expect-5.45-check-telnet.patch
+	http://pkgs.fedoraproject.org/cgit/rpms/expect.git/plain/expect-5.45-passmass-su-full-path.patch
+	http://pkgs.fedoraproject.org/cgit/rpms/expect.git/plain/expect-5.45-mkpasswd-man.patch
+	5.45-openpty.patch
+"
 
 DISTCLEANFILES="aclocal.m4 testsuite/aclocal.m4"
 DIFF_EXCLUDES="config.guess config.sub"
 
 src_compile() {
 	cd ${S}
-	# FIXME: gnuconfigize?
-	cp /usr/share/cygport/config.* tclconfig/
+	gnuconfigize tclconfig/
 	cygautoreconf
 	cd ${B}
 	cygconf
